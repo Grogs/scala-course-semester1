@@ -29,7 +29,7 @@ class HotelFinderService @Inject() (catalogueService: HotelCatalogueService) {
     }
   }
 
-  def findHotels(center: Coordinates, radius: Int): Map[Long, Coordinates] = {
+  def findHotels(center: Coordinates, radius: Double): Map[Long, Coordinates] = {
     for {
       (id, coordinates) <- allHotels
       dist = distance.haversine(center, coordinates)

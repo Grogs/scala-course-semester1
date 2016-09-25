@@ -28,16 +28,4 @@ class HomeController @Inject() (
     Ok(views.html.index("Your new application is ready."))
   }
 
-  def hotelsNearLondon = Action{
-    Ok{
-      Json.toJson(
-        for {
-          coordinates <- geoService.lookupCoordinates("London").toSeq
-          (hotelId, _) <- finderService.findHotels(coordinates, 2)
-          hotel <- catalogueService.lookupHotel(hotelId)
-        } yield hotel
-      )
-    }
-  }
-
 }
