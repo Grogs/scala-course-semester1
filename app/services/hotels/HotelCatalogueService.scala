@@ -1,4 +1,4 @@
-package services
+package services.hotels
 
 import java.io.{File, FilenameFilter}
 import javax.inject.Singleton
@@ -37,4 +37,3 @@ class HotelCatalogueService {
     hotels.get(id)
 
 }
-

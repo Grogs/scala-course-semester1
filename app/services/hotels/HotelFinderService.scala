@@ -1,4 +1,4 @@
-package services
+package services.hotels
 
 import javax.inject.{Inject, Singleton}
 
