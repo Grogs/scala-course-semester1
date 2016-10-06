@@ -1,6 +1,12 @@
 // The Play plugin
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.8")
 
+// Scala.js plugins
+
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.12")
+
+addSbtPlugin("com.vmunier" % "sbt-web-scalajs" % "1.0.1")
+
 // web plugins
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0")
@@ -17,5 +23,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
 
 addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.6")
 
+//Dependency for hotels cache population task
 
 libraryDependencies += "org.jsoup" % "jsoup" % "1.9.2" % Compile

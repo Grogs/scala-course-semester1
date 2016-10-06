@@ -1,5 +1,4 @@
 lazy val commonSettings = Seq(
-    name := "play-scala",
     version := "1.0-SNAPSHOT",
     scalaVersion := "2.11.7"
 )
@@ -14,8 +13,24 @@ lazy val server = project.enablePlugins(PlayScala)
       "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
       "org.webjars" %% "webjars-play" % "2.5.0",
       "org.webjars" % "bootstrap" % "3.1.1-2"
-    )
+    ),
+    name := "play-scala"
   )
+  .dependsOn(sharedJvm)
+
+lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
+  .settings(commonSettings: _*)
+  .settings(
+      libraryDependencies ++= Seq(
+          "com.lihaoyi" %%% "upickle" % "0.3.6",
+          "com.lihaoyi" %%% "autowire" % "0.2.4",
+          "com.lihaoyi" %%% "scalatags" % "0.5.2",
+          "fr.hmil" %%% "roshttp" % "1.0.0"
+      )
+  )
+lazy val sharedJvm = shared.jvm
+lazy val sharedJs = shared.js
+
 
 lazy val populateCatalogueCache = taskKey[Unit]("Populate conf/example-hotels with some PCS properties")
 
