@@ -3,6 +3,9 @@ lazy val commonSettings = Seq(
     scalaVersion := "2.11.7"
 )
 
+// loads the server project at sbt startup
+onLoad in Global := (Command.process("project server", _: State)) compose (onLoad in Global).value
+
 lazy val server = project.enablePlugins(PlayScala)
   .settings(commonSettings: _*)
   .settings(
@@ -14,7 +17,9 @@ lazy val server = project.enablePlugins(PlayScala)
       "org.webjars" %% "webjars-play" % "2.5.0",
       "org.webjars" % "bootstrap" % "3.1.1-2"
     ),
-    name := "play-scala"
+    name := "play-scala",
+    scalaJSProjects := Seq(client),
+    pipelineStages in Assets := Seq(scalaJSPipeline)
   )
   .dependsOn(sharedJvm)
 
@@ -28,8 +33,20 @@ lazy val shared = crossProject.crossType(CrossType.Pure)
           "fr.hmil" %%% "roshttp" % "1.0.0"
       )
   )
+  .jsConfigure(_ enablePlugins ScalaJSWeb)
+
 lazy val sharedJvm = shared.jvm
 lazy val sharedJs = shared.js
+
+lazy val client = project.enablePlugins(ScalaJSPlugin, ScalaJSWeb)
+  .settings(commonSettings: _*)
+  .settings(
+    persistLauncher := true,
+    persistLauncher in Test := false,
+    libraryDependencies ++= Seq(
+        "org.scala-js" %%% "scalajs-dom" % "0.9.1"
+    )
+)
 
 lazy val populateCatalogueCache = taskKey[Unit]("Populate conf/example-hotels with some PCS properties")
 
