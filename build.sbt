@@ -1,19 +1,21 @@
-name := """play-scala"""
-
-version := "1.0-SNAPSHOT"
-
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-scalaVersion := "2.11.7"
-
-libraryDependencies ++= Seq(
-  jdbc,
-  cache,
-  ws,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
-  "org.webjars" %% "webjars-play" % "2.5.0",
-  "org.webjars" % "bootstrap" % "3.1.1-2"
+lazy val commonSettings = Seq(
+    name := "play-scala",
+    version := "1.0-SNAPSHOT",
+    scalaVersion := "2.11.7"
 )
+
+lazy val server = project.enablePlugins(PlayScala)
+  .settings(commonSettings: _*)
+  .settings(
+    libraryDependencies ++= Seq(
+      jdbc,
+      cache,
+      ws,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
+      "org.webjars" %% "webjars-play" % "2.5.0",
+      "org.webjars" % "bootstrap" % "3.1.1-2"
+    )
+  )
 
 lazy val populateCatalogueCache = taskKey[Unit]("Populate conf/example-hotels with some PCS properties")
 

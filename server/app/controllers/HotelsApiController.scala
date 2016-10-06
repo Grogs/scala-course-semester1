@@ -4,8 +4,7 @@ import javax.inject.Inject
 
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import services.hotels.{GeographyService, HotelCatalogueService, HotelFinderService, HotelsService}
-import services.{HotelCatalogueService, HotelFinderService}
+import services.hotels.HotelsService
 
 class HotelsApiController @Inject()(hotelsService: HotelsService) extends Controller {
 
