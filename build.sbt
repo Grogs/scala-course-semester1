@@ -13,6 +13,7 @@ lazy val server = project.enablePlugins(PlayScala)
       jdbc,
       cache,
       ws,
+      "com.vmunier" %% "scalajs-scripts" % "1.0.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
       "org.webjars" %% "webjars-play" % "2.5.0",
       "org.webjars" % "bootstrap" % "3.1.1-2"
