@@ -18,7 +18,7 @@ lazy val server = project.enablePlugins(PlayScala)
   )
   .dependsOn(sharedJvm)
 
-lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
+lazy val shared = crossProject.crossType(CrossType.Pure)
   .settings(commonSettings: _*)
   .settings(
       libraryDependencies ++= Seq(
@@ -30,7 +30,6 @@ lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
   )
 lazy val sharedJvm = shared.jvm
 lazy val sharedJs = shared.js
-
 
 lazy val populateCatalogueCache = taskKey[Unit]("Populate conf/example-hotels with some PCS properties")
 

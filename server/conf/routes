@@ -12,4 +12,8 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET /hotels/:destinationName/:radius    controllers.HotelsApiController.hotelsNear(destinationName, radius)
+GET     /hotels/:destinationName/:radius    controllers.HotelsApiController.hotelsNear(destinationName, radius)
+
+GET     /hotels                     controllers.HotelsController.landingPage()
+
+GET     /webjars/*file              controllers.WebJarAssets.at(file)
