@@ -16,7 +16,8 @@ lazy val server = project.enablePlugins(PlayScala)
       "com.vmunier" %% "scalajs-scripts" % "1.0.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
       "org.webjars" %% "webjars-play" % "2.5.0",
-      "org.webjars" % "bootstrap" % "3.1.1-2"
+      "org.webjars" % "bootstrap" % "3.1.1-2",
+      "org.webjars" % "animate.css" % "3.5.2"
     ),
     name := "play-scala",
     scalaJSProjects := Seq(client),
@@ -45,7 +46,8 @@ lazy val client = project.enablePlugins(ScalaJSPlugin, ScalaJSWeb)
     persistLauncher := true,
     persistLauncher in Test := false,
     libraryDependencies ++= Seq(
-        "org.scala-js" %%% "scalajs-dom" % "0.9.1"
+      "org.scala-js" %%% "scalajs-dom" % "0.9.1",
+      "com.lihaoyi" %%% "scalatags" % "0.5.2"
     )
 )
 
