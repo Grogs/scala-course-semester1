@@ -15,7 +15,7 @@ class GeographyService {
   )
 
   def lookupDestination(name: String): Option[Coordinates] = {
-    destinations.get(name)
+    destinations.get(name.toLowerCase)
   }
 
 }
