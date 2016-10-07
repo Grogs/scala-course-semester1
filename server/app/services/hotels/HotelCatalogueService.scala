@@ -28,6 +28,7 @@ class HotelCatalogueService {
       id,
       (json \ "name").as[String],
       Coordinates(lat, long),
+      smallImages.take(3).map("http://exp.cdn-hotels.com" + _),
       largeImages.take(3).map("http://exp.cdn-hotels.com" + _)
     )
   }.toMap
