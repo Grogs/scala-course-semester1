@@ -14,7 +14,7 @@ class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: Hot
       dist <- distance
     } yield hotelsService.search(dest, dist)
 
-    Ok(views.html.hotelListings(webJarAssets)(destination, distance, hotels))
+    Ok(views.html.hotelListings(webJarAssets))
   }
 
 }
