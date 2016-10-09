@@ -4,7 +4,7 @@ import org.scalajs.dom._
 import org.scalajs.dom.ext.Ajax
 import org.scalajs.dom.html.{Button, Input}
 
-object HelloWorld extends JSApp {
+object ClientMain extends JSApp {
 
     @JSExport
     override def main(): Unit = {

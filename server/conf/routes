@@ -14,6 +14,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /hotels/:destinationName/:radius    controllers.HotelsApiController.hotelsNear(destinationName, radius)
 
-GET     /hotels                     controllers.HotelsController.landingPage(destination: Option[String], distance: Option[Float])
+GET     /hotels                     controllers.HotelsController.hotelListings(destination: Option[String], distance: Option[Float])
 
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
