@@ -5,7 +5,7 @@ import org.scalajs.dom.html.{Button, Input}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js.annotation.{JSExport, ScalaJSDefined}
 import scala.scalajs.js.{Dynamic, JSApp}
 
 object ClientMain extends JSApp {
@@ -46,6 +46,7 @@ object ClientMain extends JSApp {
 
     }
 
+    @ScalaJSDefined
     trait State extends js.Any {
         val destination: String
         val distance: String
