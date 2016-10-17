@@ -2,11 +2,14 @@ import org.scalajs.dom._
 import org.scalajs.dom.document.location
 import org.scalajs.dom.ext.Ajax
 import org.scalajs.dom.html.{Button, Input}
+import services.hotels.HotelsServiceApi
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExport, ScalaJSDefined}
 import scala.scalajs.js.{Dynamic, JSApp}
+import scalatags.Text.all._
+import autowire._
 
 object ClientMain extends JSApp {
 
@@ -33,15 +36,17 @@ object ClientMain extends JSApp {
 
         //Poor man's PJAX
         def reload(destination: String, distance: String, pushState: Boolean = true) =
-            Ajax.get(s"/hotels?destination=$destination&distance=$distance", responseType = "document").map( xhr =>
-                xhr.responseXML.getElementById("hotels")
-            ).foreach { newListings =>
+            Client[HotelsServiceApi].search(destination, distance.toDouble).call().foreach { hotels =>
                 if (pushState) {
                     val path = location.pathname + s"?destination=$destination&distance=$distance"
                     val state = Dynamic.literal(destination = destination, distance = distance)
                     window.history.pushState(state, "", path)
                 }
-                hotelTable.innerHTML = newListings.innerHTML
+                hotelTable.innerHTML =
+                  tbody(
+                      for (h <- hotels ) yield
+                          tr(td(h.name), td(h.coordinates.toString), td(h.smallImages.map( i => img(src:=i))))
+                  ).render
             }
 
     }
