@@ -43,4 +43,5 @@ class HotelsApiController @Inject()(hotelsService: HotelsService) extends Contro
   }
 
 
+
 }

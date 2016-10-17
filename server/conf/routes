@@ -19,4 +19,6 @@ GET     /hotels                     controllers.HotelsController.hotelListings(d
 GET     /hotels/api/*path           controllers.HotelsApiController.api(path)
 POST    /hotels/api/*path           controllers.HotelsApiController.api(path)
 
+GET     /WebSocket/user             controllers.ActorController.socket
+
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
