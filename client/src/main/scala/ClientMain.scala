@@ -34,8 +34,9 @@ object ClientMain extends JSApp {
                 window.history.pushState(literal(destination = destination, distance = distance), "", newPath)
         }
 
-        destinationInput.onkeydown = (e: Event) => reload()
-        distanceInput.onkeydown = (e: Event) => reload()
+        destinationInput.onkeyup = (e: Event) => reload()
+        distanceInput.onkeyup = (e: Event) => reload()
+        distanceInput.onchange = (e: Event) => reload()
 
         new Autocomplete(
             destinationInput,
