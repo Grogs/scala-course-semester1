@@ -20,6 +20,7 @@ object ClientMain extends JSApp {
         val distanceInput = document.getElementById("distance").asInstanceOf[Input]
         val loadButton = document.getElementById("load-hotels").asInstanceOf[Button]
         val hotelTable = document.getElementById("hotels")
+        val webSocket = new WebSocket(s"ws://${location.hostname}:${location.port}/WebSocket/user")
 
         new Autocomplete(
             destinationInput,
@@ -35,7 +36,12 @@ object ClientMain extends JSApp {
         loadButton.style.display = "none"
 
         //Poor man's PJAX
-        def reload(destination: String, distance: String, pushState: Boolean = true) =
+        def reload(destination: String, distance: String, pushState: Boolean = true) = {
+
+            webSocket.send(destination)
+
+            webSocket.onmessage = (e: MessageEvent) => console.log(e.data.toString)
+
             Client[HotelsServiceApi].search(destination, distance.toDouble).call().foreach { hotels =>
                 if (pushState) {
                     val path = location.pathname + s"?destination=$destination&distance=$distance"
@@ -45,7 +51,7 @@ object ClientMain extends JSApp {
                 hotelTable.innerHTML =
                   views.HotelsTable(hotels).render
             }
-
+        }
     }
 
     @ScalaJSDefined
