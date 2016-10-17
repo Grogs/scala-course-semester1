@@ -30,7 +30,7 @@ lazy val shared = crossProject.crossType(CrossType.Pure)
   .settings(
       libraryDependencies ++= Seq(
           "com.lihaoyi" %%% "upickle" % "0.3.6",
-          "com.lihaoyi" %%% "autowire" % "0.2.4",
+          "com.lihaoyi" %%% "autowire" % "0.2.5",
           "com.lihaoyi" %%% "scalatags" % "0.5.2",
           "fr.hmil" %%% "roshttp" % "1.0.0"
       )
@@ -46,10 +46,10 @@ lazy val client = project.enablePlugins(ScalaJSPlugin, ScalaJSWeb)
     persistLauncher := true,
     persistLauncher in Test := false,
     libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % "0.9.1",
-      "com.lihaoyi" %%% "scalatags" % "0.5.2"
+      "org.scala-js" %%% "scalajs-dom" % "0.9.1"
     )
-)
+  )
+  .dependsOn(sharedJs)
 
 lazy val populateCatalogueCache = taskKey[Unit]("Populate conf/example-hotels with some PCS properties")
 
