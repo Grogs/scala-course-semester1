@@ -43,10 +43,7 @@ object ClientMain extends JSApp {
                     window.history.pushState(state, "", path)
                 }
                 hotelTable.innerHTML =
-                  tbody(
-                      for (h <- hotels ) yield
-                          tr(td(h.name), td(h.coordinates.toString), td(h.smallImages.map( i => img(src:=i))))
-                  ).render
+                  views.HotelsTable(hotels).render
             }
 
     }
