@@ -7,14 +7,14 @@ import services.hotels.HotelsService
 
 class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: HotelsService) extends Controller {
 
-  def hotelListings(destinationOpt: Option[String], distanceOpt: Option[String]) = Action{
+  def hotelListings(destination: Option[String], distance: Option[Float]) = Action{
 
     val hotels = for {
-      destination <- destinationOpt
-      distance <- distanceOpt
-    } yield hotelsService.search(destination, distance.toDouble)
+      dest <- destination
+      dist <- distance
+    } yield hotelsService.search(dest, dist)
 
-    Ok(views.html.hotelListings(webJarAssets)(hotels))
+    Ok(views.html.hotelListings(webJarAssets)(destination, distance, hotels))
   }
 
 }
