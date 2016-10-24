@@ -16,4 +16,7 @@ GET     /hotels/:destinationName/:radius    controllers.HotelsApiController.hote
 
 GET     /hotels                     controllers.HotelsController.hotelListings(destination: Option[String], distance: Option[Float])
 
+GET     /hotels/api/*path           controllers.HotelsApiController.api(path)
+POST    /hotels/api/*path           controllers.HotelsApiController.api(path)
+
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
