@@ -8,6 +8,12 @@ import org.scalajs.dom.html.{Button, Div, Input}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
+import services.hotels._
+import autowire._
+import model.Hotel
+import views.TableView
+
+import scala.concurrent.Future
 
 object ClientMain extends JSApp {
 
@@ -23,13 +29,13 @@ object ClientMain extends JSApp {
         def getDistance = distanceInput.value
 
         def reload(destination: String = getDestination, distance: String = getDistance, pushSate: Boolean = true) = {
-            val newPath = s"/hotels?destination=$destination&distance=$distance"
-            Ajax.get(newPath, responseType = "document")
-              .foreach{ resp =>
-                  val newTable = resp.responseXML.getElementById("hotels")
-                  val oldTable = document.getElementById("hotels")
-                  oldTable.innerHTML = newTable.innerHTML
-              }
+            val hotels:Future[Seq[Hotel]] = null//ApiClient[HotelsServiceApi].search(destination, distance).call()
+
+            hotels.map( h =>
+                val oldTable = document.getElementById("hotels")
+                oldTable.innerHTML = TableView.render(h).render
+            )
+
             if (pushSate)
                 window.history.pushState(literal(destination = destination, distance = distance), "", newPath)
         }
