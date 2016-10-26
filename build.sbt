@@ -47,9 +47,9 @@ lazy val client = project.enablePlugins(ScalaJSPlugin, ScalaJSWeb)
     persistLauncher in Test := false,
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.9.1",
-        "com.lihaoyi" %%% "autowire" % "0.2.4",
-        "com.lihaoyi" %%% "upickle" % "0.3.6",
-        "com.lihaoyi" %%% "scalatags" % "0.5.2"
+      "com.lihaoyi" %%% "autowire" % "0.2.4",
+      "com.lihaoyi" %%% "upickle" % "0.3.6",
+      "com.lihaoyi" %%% "scalatags" % "0.5.2"
     )
 ).dependsOn(sharedJs)
 
