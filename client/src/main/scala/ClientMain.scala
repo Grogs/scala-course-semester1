@@ -28,7 +28,6 @@ import scalatags.Text.all._
 object ClientMain extends JSApp {
 
     override def main(): Unit = {
-        println("Hello World!")
         js.Dynamic.global.hotelListings = () => hotelListings()
         js.Dynamic.global.hotelBooking = () => hotelBooking()
     }
@@ -79,7 +78,7 @@ object ClientMain extends JSApp {
     }
 
     def hotelBooking() = {
-
+        println("Booking page")
     }
 
 }
