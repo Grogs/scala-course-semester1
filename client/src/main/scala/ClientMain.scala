@@ -23,7 +23,6 @@ object ClientMain extends JSApp {
         val distanceInput = document.getElementById("distance").asInstanceOf[Input]
         val loadButton = document.getElementById("load-hotels").asInstanceOf[Button]
         val hotelTable = document.getElementById("hotels")
-        val showMapButton = document.getElementById("show-map").asInstanceOf[Button]
 
         loadButton.style.display = "none"
 
@@ -45,16 +44,6 @@ object ClientMain extends JSApp {
         distanceInput.onkeyup = (e: Event) => reload()
         distanceInput.onchange = (e: Event) => reload()
 
-        // From http://getbootstrap.com/javascript/#modals-events
-        jQuery("#mapModal").on("shown.bs.modal",
-            (_: JQueryEventObject) => {
-                Client[HotelsServiceApi].search(getDestination, getDistance).call().foreach { hotels =>
-                    document.getElementById("mapModalLabel").innerHTML = s"Hotels within ${getDistance}km of $getDestination"
-                    renderMap(document.getElementById("map"), hotels)
-                }
-            }
-        )
-
         new Autocomplete(
             destinationInput,
             List("London", "Paris", "Bath"),
@@ -71,59 +60,6 @@ object ClientMain extends JSApp {
     trait State extends js.Any {
         val destination: String
         val distance: Double
-    }
-
-    def renderMap(target: Element, hotels: Seq[Hotel]) = {
-
-        val opts = google.maps.MapOptions(
-            center = new google.maps.LatLng(50, 0),
-            zoom = 11
-        )
-
-        val gmap = new google.maps.Map(target, opts)
-
-        val point =
-            for {
-                hotel <- hotels
-                Coordinates(lat, long) = hotel.coordinates
-                latLng = new google.maps.LatLng(lat, long)
-            } yield {
-
-              val marker = new google.maps.Marker(google.maps.MarkerOptions(
-                  position = latLng,
-                  map = gmap,
-                  title = hotel.name
-              ))
-
-              val infoWindow = new google.maps.InfoWindow(
-                  InfoWindowOptions( content =
-                    div(
-                        h2(hotel.name),
-                        p(s"Rating: ${hotel.guestRating}/5 (${hotel.numberOfReviews} reviews)"),
-                        raw(hotel.descriptionHtml)
-                    ).render
-                  )
-              )
-
-              marker -> infoWindow
-            }
-
-        val markerBounds = new google.maps.LatLngBounds()
-        var activeInfoWindow = new google.maps.InfoWindow
-
-        for {
-            (marker, infoWindow) <- point
-        } yield {
-            marker.addListener("click", (_:js.Any) => {
-                activeInfoWindow.close()
-                activeInfoWindow = infoWindow
-                infoWindow.open(gmap, marker)
-            })
-            markerBounds.extend(marker.getPosition())
-        }
-
-        gmap.fitBounds(markerBounds)
-
     }
 
 }
