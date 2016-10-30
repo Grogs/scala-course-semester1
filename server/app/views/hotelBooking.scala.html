@@ -1,0 +1,43 @@
+@import model._
+@import views.TableView
+@(webJarAssets: WebJarAssets)(hotel: Hotel)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <head>
+        <title>Booking: @hotel.name</title>
+        <link rel='stylesheet' href='@routes.WebJarAssets.at(webJarAssets.locate("css/bootstrap.min.css"))'>
+        <link rel='stylesheet' href='@routes.WebJarAssets.at(webJarAssets.locate("animate.min.css"))'>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    </head>
+</head>
+<body>
+    <div id="booking-content" class="container">
+        <h2>Booking</h2>
+        <p>Select your dates and click 'Book Now'</p>
+        <form class="form-inline" method="post" action="@routes.HotelsController.book()">
+            <input type="hidden" name="hotelId" id="hotelId" value="@hotel.id">
+            <div class="form-group">
+                <label for="checkin">Check-in Date</label>
+                <input type="date" class="form-control" name="checkin" id="checkin">
+            </div>
+            <div class="form-group">
+                <label for="checkout">Check-out Date</label>
+                <input type="date" class="form-control" name="checkout" id="checkout" >
+            </div>
+            <button id="book" type="submit" class="btn btn-primary">Book Now</button>
+        </form>
+        <br/>
+        <div class="jumbotron">
+            <h2>@hotel.name</h2>
+
+            @Html(hotel.descriptionHtml)
+        </div>
+    </div>
+
+    @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
+    <script>hotelBooking()</script>
+</body>
+</html>

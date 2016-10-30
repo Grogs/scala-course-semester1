@@ -45,8 +45,7 @@
         </div>
 
 
-        @* Using https://github.com/vmunier/scalajs-scripts *@
         @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
-
+        <script>hotelListings()</script>
     </body>
 </html>

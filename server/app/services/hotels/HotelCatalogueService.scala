@@ -24,12 +24,23 @@ class HotelCatalogueService {
       smallImages = imageReferences.flatMap(ref => (ref \ "images" \ "E_160x90" \ "url").asOpt[String])
       lat = (json \ "coordinate" \ "latitude").as[Double]
       long = (json \ "coordinate" \ "longitude").as[Double]
+
+      phoneNumber = (json \ "phoneNumber").as[String]
+      starRating = (json \ "starRating").as[Double]
+      descriptionHtml = (json \ "description").as[String]
+      guestRating = (json \ "guestRating").as[Double]
+      numberOfReviews = (json \ "numberOfReviews").as[Int]
     } yield id -> Hotel(
       id,
       (json \ "name").as[String],
       Coordinates(lat, long),
       smallImages.take(3).map("http://exp.cdn-hotels.com" + _),
-      largeImages.take(3).map("http://exp.cdn-hotels.com" + _)
+      largeImages.take(3).map("http://exp.cdn-hotels.com" + _),
+      phoneNumber,
+      starRating,
+      descriptionHtml,
+      guestRating,
+      numberOfReviews
     )
   }.toMap
 

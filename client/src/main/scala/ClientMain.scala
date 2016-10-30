@@ -1,8 +1,7 @@
 import org.scalajs.dom.ext.Ajax
 
 import scala.scalajs.js.{Dynamic, JSApp}
-import scala.scalajs.js.annotation.{JSExport, ScalaJSDefined}
-import org.scalajs.dom._
+import scala.scalajs.js.annotation.{JSExport, JSExportAll, ScalaJSDefined}
 import org.scalajs.dom.html.{Button, Div, Input}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -26,11 +25,23 @@ import scala.scalajs.js.{Dynamic, JSApp}
 import scalatags.Text.all._
 import autowire._
 
+@JSExportAll
 object ClientMain extends JSApp {
 
-    @JSExport
     override def main(): Unit = {
         println("Hello World!")
+        js.Dynamic.global.hotelListings = () => hotelListings()
+        js.Dynamic.global.hotelBooking = () => hotelBooking()
+    }
+
+    def hotelListings() = {
+
+        @ScalaJSDefined
+        trait State extends js.Any {
+            val destination: String
+            val distance: String
+        }
+
         val destinationInput = document.getElementById("destination").asInstanceOf[Input]
         val distanceInput = document.getElementById("distance").asInstanceOf[Input]
         val loadButton = document.getElementById("load-hotels").asInstanceOf[Button]
@@ -68,9 +79,8 @@ object ClientMain extends JSApp {
         }
     }
 
-    @ScalaJSDefined
-    trait State extends js.Any {
-        val destination: String
-        val distance: String
+    def hotelBooking() = {
+
     }
+
 }
