@@ -6,7 +6,7 @@ lazy val commonSettings = Seq(
 // loads the server project at sbt startup
 onLoad in Global := (Command.process("project server", _: State)) compose (onLoad in Global).value
 
-lazy val server = project.enablePlugins(PlayScala)
+lazy val server = project.enablePlugins(PlayScala, SbtWeb)
   .settings(commonSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
@@ -17,7 +17,9 @@ lazy val server = project.enablePlugins(PlayScala)
       "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
       "org.webjars" %% "webjars-play" % "2.5.0",
       "org.webjars" % "bootstrap" % "3.1.1-2",
-      "org.webjars" % "animate.css" % "3.5.2"
+      "org.webjars" % "animate.css" % "3.5.2",
+//      "org.webjars.npm" % "material-ui" % "0.16.0",
+      "org.webjars.npm" % "elemental" % "0.5.13"
     ),
     name := "play-scala",
     scalaJSProjects := Seq(client),
@@ -49,7 +51,10 @@ lazy val client = project.enablePlugins(ScalaJSPlugin, ScalaJSWeb)
       "org.scala-js" %%% "scalajs-dom" % "0.9.1",
       "com.lihaoyi" %%% "autowire" % "0.2.4",
       "com.lihaoyi" %%% "upickle" % "0.3.6",
-      "com.lihaoyi" %%% "scalatags" % "0.5.2"
+      "com.lihaoyi" %%% "scalatags" % "0.5.2",
+      "com.github.japgolly.scalajs-react" %%% "core" % "0.11.1",
+      "com.github.japgolly.scalajs-react" %%% "extra" % "0.11.1",
+      "com.github.chandu0101.scalajs-react-components" %%% "core" % "0.5.0"
     )
 ).dependsOn(sharedJs)
 

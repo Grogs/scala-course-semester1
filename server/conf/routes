@@ -16,6 +16,8 @@ GET     /hotels/:destinationName/:radius    controllers.HotelsApiController.hote
 
 GET     /hotels                     controllers.HotelsController.hotelListings(destination: Option[String], distance: Option[Float])
 
+GET     /hotelsElemental            controllers.HotelsController.elementalHotelListings()
+
 GET     /hotels/api/*path           controllers.HotelsApiController.api(path)
 POST    /hotels/api/*path           controllers.HotelsApiController.api(path)
 
