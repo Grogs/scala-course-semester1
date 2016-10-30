@@ -31,9 +31,6 @@ object HotelsTable {
             td(
               for (i <- h.smallImages) yield
                 img(src := i)
-            ),
-            td(
-              a(cls:="btn btn-primary", href := s"/hotel/${h.id}/booking", "Book Now")
             )
           )
       )

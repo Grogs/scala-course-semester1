@@ -21,7 +21,7 @@ class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: Hot
 
   def hotelBooking(hotelId: String) = Action{
     hotelsService.get(hotelId.toLong) match {
-      case Some(hotel) => Ok(views.html.hotelBooking(webJarAssets)(hotel))
+      case Some(hotel) => Ok("TODO")
       case None => NotFound(s"No hotel found for ID: $hotelId")
     }
   }
@@ -30,7 +30,7 @@ class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: Hot
     val form = req.body.asFormUrlEncoded.get.mapValues(_.head)
     val List(hotelId, checkin, checkout) = List("hotelId", "checkin", "checkout").map(form)
     Logger.info(s"Booking received for hotelID: $hotelId, checkin: $checkin, checkout: $checkout")
-    Ok("Booked")
+    Ok("TODO")
   }}
 
 }
