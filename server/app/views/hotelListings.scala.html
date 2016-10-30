@@ -68,8 +68,8 @@
             </div>
 
             @Html(views.HotelsTable(hotels.getOrElse(Nil)).render)
-        </div>
 
+        </div>
 
         @* Using https://github.com/vmunier/scalajs-scripts *@
         @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)

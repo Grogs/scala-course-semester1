@@ -18,7 +18,6 @@ object ClientMain extends JSApp {
 
     @JSExport
     override def main(): Unit = {
-        println("Hello World!")
         val destinationInput = document.getElementById("destination").asInstanceOf[Input]
         val distanceInput = document.getElementById("distance").asInstanceOf[Input]
         val loadButton = document.getElementById("load-hotels").asInstanceOf[Button]
