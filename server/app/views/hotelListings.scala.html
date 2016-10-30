@@ -21,6 +21,8 @@
         <title>@title</title>
         <link rel='stylesheet' href='@routes.WebJarAssets.at(webJarAssets.locate("css/bootstrap.min.css"))'>
         <link rel='stylesheet' href='@routes.WebJarAssets.at(webJarAssets.locate("animate.min.css"))'>
+        <script type="text/javascript" src='@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))'></script>
+        <script type="text/javascript" src='@routes.WebJarAssets.at(webJarAssets.locate("js/bootstrap.min.js"))'></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     </head>
     <body>
@@ -42,8 +44,8 @@
             </form>
 
             @Html(views.HotelsTable(hotels.getOrElse(Nil)).render)
-        </div>
 
+        </div>
 
         @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
         <script>hotelListings()</script>

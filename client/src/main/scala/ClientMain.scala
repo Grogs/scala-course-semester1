@@ -9,21 +9,20 @@ import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
 import services.hotels._
 import autowire._
-import model.Hotel
+import google.maps.InfoWindowOptions
+import model.{Coordinates, Hotel}
+import org.scalajs.dom.document.location
+import org.scalajs.dom.html.{Button, Input}
+import org.scalajs.dom.{raw => _, _}
+import org.scalajs.jquery.{JQueryEventObject, jQuery}
+import services.hotels.HotelsServiceApi
 import views.TableView
 
-import scala.concurrent.Future
-import org.scalajs.dom._
-import org.scalajs.dom.document.location
-import org.scalajs.dom.ext.Ajax
-import org.scalajs.dom.html.{Button, Input}
-import services.hotels.HotelsServiceApi
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExport, ScalaJSDefined}
 import scala.scalajs.js.{Dynamic, JSApp}
 import scalatags.Text.all._
-import autowire._
 
 @JSExportAll
 object ClientMain extends JSApp {
@@ -39,7 +38,7 @@ object ClientMain extends JSApp {
         @ScalaJSDefined
         trait State extends js.Any {
             val destination: String
-            val distance: String
+            val distance: Double
         }
 
         val destinationInput = document.getElementById("destination").asInstanceOf[Input]
@@ -50,10 +49,10 @@ object ClientMain extends JSApp {
         loadButton.style.display = "none"
 
         def getDestination = destinationInput.value
-        def getDistance = distanceInput.value
+        def getDistance = distanceInput.value.toDouble
 
-        def reload(destination: String = getDestination, distance: String = getDistance, pushState: Boolean = true) = {
-          Client[HotelsServiceApi].search(destination, distance.toDouble).call().foreach { hotels =>
+        def reload(destination: String = getDestination, distance: Double = getDistance, pushState: Boolean = true) = {
+          Client[HotelsServiceApi].search(destination, distance).call().foreach { hotels =>
             if (hotels.nonEmpty && pushState) {
               val path = location.pathname + s"?destination=$destination&distance=$distance"
               val state = Dynamic.literal(destination = destination, distance = distance)
