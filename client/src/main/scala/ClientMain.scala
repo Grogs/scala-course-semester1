@@ -43,7 +43,7 @@ object ClientMain extends JSApp {
 
         def reload(destination: String = getDestination, distance: String = getDistance, pushState: Boolean = true) = {
           Client[HotelsServiceApi].search(destination, distance.toDouble).call().foreach { hotels =>
-            if (pushState) {
+            if (hotels.nonEmpty && pushState) {
               val path = location.pathname + s"?destination=$destination&distance=$distance"
               val state = Dynamic.literal(destination = destination, distance = distance)
               window.history.pushState(state, "", path)
