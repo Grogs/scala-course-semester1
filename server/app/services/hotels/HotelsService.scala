@@ -13,4 +13,6 @@ class HotelsService @Inject() (
     hotel <- catalogueService.lookupHotel(hotelId)
   } yield hotel
 
+  def get(hotelId: Long) = catalogueService.lookupHotel(hotelId)
+
 }

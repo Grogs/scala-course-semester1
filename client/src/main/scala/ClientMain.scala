@@ -1,3 +1,13 @@
+import org.scalajs.dom.ext.Ajax
+
+import scala.scalajs.js.{Dynamic, JSApp}
+import scala.scalajs.js.annotation.{JSExport, JSExportAll, ScalaJSDefined}
+import org.scalajs.dom.html.{Button, Div, Input}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
+import scala.scalajs.js.Dynamic.literal
+import services.hotels._
 import autowire._
 import google.maps.InfoWindowOptions
 import model.{Coordinates, Hotel}
@@ -14,10 +24,17 @@ import scala.scalajs.js.annotation.{JSExport, ScalaJSDefined}
 import scala.scalajs.js.{Dynamic, JSApp}
 import scalatags.Text.all._
 
+@JSExportAll
 object ClientMain extends JSApp {
 
-    @JSExport
     override def main(): Unit = {
+
+        @ScalaJSDefined
+        trait State extends js.Any {
+            val destination: String
+            val distance: Double
+        }
+
         val destinationInput = document.getElementById("destination").asInstanceOf[Input]
         val distanceInput = document.getElementById("distance").asInstanceOf[Input]
         val loadButton = document.getElementById("load-hotels").asInstanceOf[Button]
@@ -66,11 +83,6 @@ object ClientMain extends JSApp {
         }
     }
 
-    @ScalaJSDefined
-    trait State extends js.Any {
-        val destination: String
-        val distance: Double
-    }
 
     def renderMap(target: Element, hotels: Seq[Hotel]) = {
 
