@@ -1,6 +1,6 @@
 @import model._
 @import views.TableView
-@(webJarAssets: WebJarAssets)(destination: Option[String], distance: Option[Float], hotels: Option[Seq[Hotel]])
+@(webJarAssets: WebJarAssets, googleMapsApiKey: Option[String])(destination: Option[String], distance: Option[Float], hotels: Option[Seq[Hotel]])
 
 @link(coordinates: Coordinates) = @{
     import coordinates._
@@ -15,6 +15,13 @@
     }
 }
 
+@gmapsKey = @{
+    googleMapsApiKey match {
+        case Some(key) => s"?key=$key"
+        case None => ""
+    }
+}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,7 +30,7 @@
         <link rel='stylesheet' href='@routes.WebJarAssets.at(webJarAssets.locate("animate.min.css"))'>
         <script type="text/javascript" src='@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))'></script>
         <script type="text/javascript" src='@routes.WebJarAssets.at(webJarAssets.locate("js/bootstrap.min.js"))'></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js@gmapsKey"></script>
     </head>
     <body>
 
