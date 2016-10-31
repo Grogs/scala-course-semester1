@@ -5,6 +5,8 @@ import javax.inject.Inject
 import play.api.mvc._
 import services.hotels.HotelsService
 
+import play.api.Logger
+
 class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: HotelsService) extends Controller {
 
   def hotelListings(destination: Option[String], distance: Option[Float]) = Action{
