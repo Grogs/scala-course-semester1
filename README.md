@@ -11,3 +11,10 @@ Lesson 6
 --------
 
 Today we will add a map to our hotel listing page. We will use the Google Maps API, and add markers, with infowindows containing the hotel details.
+
+First get today's branch:
+```
+git fetch
+git checkout lesson6
+sbt run
+```
