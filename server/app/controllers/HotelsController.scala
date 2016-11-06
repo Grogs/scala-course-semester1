@@ -9,6 +9,8 @@ import play.api.Logger
 
 class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: HotelsService) extends Controller {
 
+  val googleMapsApiKey = Option(System.getenv("GOOGLE_MAPS_API_KEY"))
+
   def hotelListings(destination: Option[String], distance: Option[Float]) = Action{
 
     val hotels = for {
@@ -16,7 +18,7 @@ class HotelsController @Inject() (webJarAssets: WebJarAssets, hotelsService: Hot
       dist <- distance
     } yield hotelsService.search(dest, dist)
 
-    Ok(views.html.hotelListings(webJarAssets)(destination, distance, hotels))
+    Ok(views.html.hotelListings(webJarAssets, googleMapsApiKey)(destination, distance, hotels))
   }
 
   def hotelBooking(hotelId: String) = Action{
