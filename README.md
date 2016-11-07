@@ -6,7 +6,7 @@ In lesson 6 we added a map to our hotel listing page. We usec the Google Maps AP
 Lesson 7 
 --------
 
-We will create a client for an external 'Hotel Pricing Service'.  
+We will create a client for an external 'Hotel Pricing Service', and see how to add an integration test for it.  
 
 It has one endpoint, which returns the available rooms (with prices) between two dates for a given hotel. 
 An example call for one of our London hotels:
