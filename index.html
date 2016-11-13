@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/sky.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+	<style>
+		html.dimbg .slide-background {
+			opacity: 0.3 !important;
+			filter: blur(4px);
+		}
+	</style>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown data-separator="^~~~~" data-separator-vertical="^~" data-notes="^Note:">
+			    <script type="text/template">
+
+WebSockets and Actors
+~
+What are websockets?
+~
+Two-way communication between browser and server
+~~~~
+Push vs Pull
+~
+Historically we used polling with AJAX to show live changes on a page
+
+Client just keeps "polling" the server to see if there are updates <!-- .element: class="fragment" -->
+~
+Then "long polling"
+
+Client makes request to server.  
+Server holds the connection open and doesn't respond until there's something to "push" to the client.  
+Then the client sends the next long-living request <!-- .element: class="fragment" -->
+![Long Polling diagram](longpolling.jpg) 
+
+~
+Then WebSockets (and Server Sent Events)
+~
+Server sent events (SSE) give you long polling-like behaviour over a single long-lived connection.  
+
+WebSockets a long-lived give you a *bidirectional* pipe from client to server
+
+Note: SSE is more efficient than long-polling
+~
+WebSockets mimic HTTP to start a connection, then use lower level Data Frames.  
+
+They have good browser support, but intermediate proxies can have issues.
+~
+Server Sent Events use HTTP so avoid any issues with proxies.  
+
+But they have less browser support and are limited to one-way server-to-client communication.
+~
+Play has good support for WebSockets  
+
+Each WebSocket connection is modelled as an Akka Actor
+
+~~~~
+The Actor Model
+~
+A way to model concurrent computation.  
+
+Sometimes refered to as *"light-weight threads"*
+~ 
+An actor consists of a mailbox of messages and a receive method.
+
+![Simple Actor](actor.png)
+~
+The actor processes messages in its' mailbox one at a time using it's receive method.
+
+![Actors have state](actorstate.png)
+
+It can maintain an internal state.  
+As it's processing each message sequentially, it doesn't worry about mutating its' state.
+~
+Actors use messages to communicate.  
+
+This is closer to how Object Oriented Programming was initially conceived by Alan Kay in Smalltalk.  
+
+![Actors send messages](actormessaging.png)
+
+My sending immutable messages, we don't have to worry about concurrency issues.
+
+Note: 
+If message is immutable, you can pass it around and they cannot modify it.  
+Erlang (and Elixir) actually make use of the fact that messages are sent instead of memory being shared. It allows them to independentally GC actors and avoid long pauses.
+~
+You can model your whole system using Actors by composing them to form Actor Systems.  
+
+![Actor System](actorsystem.png)
+~ 
+Akka implements the Actor model for Scala and Java.  
+
+Play uses it to implement some of its' internals, including PlayWS which we saw last week.
+
+Note: 
+We use it in my team. I'm not a big fan.
+~
+WebSockets and Actors  
+
+In Play, we model each side of a WebSocket connection as an actor.   
+
+The client and server can both independentally send messages to each other without any request/response.
+
+<img class="plain"  src="PlayActors.png"/>
+
+			    </script>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+	</html>
