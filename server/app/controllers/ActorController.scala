@@ -20,9 +20,15 @@ object UserActor {
 }
 
 class UserActor(out: ActorRef) extends Actor {
+    Logger.info(s"WebSocket created: $out")
+
     def receive = {
         case msg: String =>
             out ! ("I received your message: " + msg)
             Logger.info(s"Received '$msg' from $out")
+    }
+
+    override def postStop(): Unit = {
+        Logger.info(s"WebSocket closed: $out")
     }
 }
