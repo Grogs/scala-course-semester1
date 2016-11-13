@@ -46,12 +46,18 @@ object ClientMain extends JSApp {
         val hotelTable = document.getElementById("hotels")
         val showMapButton = document.getElementById("show-map").asInstanceOf[Button]
 
+        val webSocket = new WebSocket(s"ws://${location.hostname}:${location.port}/WebSocket/user")
+        webSocket.onmessage = (e: MessageEvent) => console.log(e.data.toString)
+
         loadButton.style.display = "none"
 
         def getDestination = destinationInput.value
         def getDistance = distanceInput.value.toDouble
 
         def reload(destination: String = getDestination, distance: Double = getDistance, pushState: Boolean = true) = {
+
+          webSocket.send(destination)
+
           Client[HotelsServiceApi].search(destination, distance).call().foreach { hotels =>
             if (hotels.nonEmpty && pushState) {
               val path = location.pathname + s"?destination=$destination&distance=$distance"
