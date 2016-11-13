@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.stream.Materializer
+import play.api.Logger
 import play.api.mvc._
 import play.api.libs.streams._
 
@@ -22,6 +23,6 @@ class UserActor(out: ActorRef) extends Actor {
     def receive = {
         case msg: String =>
             out ! ("I received your message: " + msg)
-            println(msg)
+            Logger.info(s"Received '$msg' from $out")
     }
 }
