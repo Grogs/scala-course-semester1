@@ -26,3 +26,5 @@ addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.6")
 //Dependency for hotels cache population task
 
 libraryDependencies += "org.jsoup" % "jsoup" % "1.9.2" % Compile
+
+addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-M14")
